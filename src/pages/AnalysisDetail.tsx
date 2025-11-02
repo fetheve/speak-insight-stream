@@ -10,6 +10,11 @@ import { api, type AnalysisResult } from "@/lib/api";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { MetricsChart } from "@/components/MetricsChart";
 import { MetricsSummary } from "@/components/MetricsSummary";
+import { GazeHeatmap } from "@/components/GazeHeatmap";
+import { HorizontalGazeChart } from "@/components/HorizontalGazeChart";
+import { HandActivityChart } from "@/components/HandActivityChart";
+import { StageTrajectory } from "@/components/StageTrajectory";
+import { MovementStats } from "@/components/MovementStats";
 
 const AnalysisDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -217,6 +222,34 @@ const AnalysisDetail = () => {
 
             <TabsContent value="timeline" className="space-y-6">
               <MetricsChart timeline={analysis.timeline} />
+              
+              {analysis.pose_analysis.eye_contact.gaze_heatmap && (
+                <GazeHeatmap heatmap={analysis.pose_analysis.eye_contact.gaze_heatmap} />
+              )}
+              
+              {analysis.pose_analysis.eye_contact.horizontal_distribution && (
+                <HorizontalGazeChart distribution={analysis.pose_analysis.eye_contact.horizontal_distribution} />
+              )}
+              
+              <HandActivityChart 
+                leftHand={analysis.pose_analysis.gestures.left_hand_distribution}
+                rightHand={analysis.pose_analysis.gestures.right_hand_distribution}
+                bothHandsActivePct={analysis.pose_analysis.gestures.both_hands_active_pct}
+                neitherHandsActivePct={analysis.pose_analysis.gestures.neither_hands_active_pct}
+              />
+              
+              <MovementStats
+                totalDistance={analysis.pose_analysis.movement.total_distance_meters}
+                averageSpeed={analysis.pose_analysis.movement.average_speed_mps}
+                staticPhasesCount={analysis.pose_analysis.movement.static_phases_count}
+              />
+              
+              {analysis.pose_analysis.movement.stage_positions && (
+                <StageTrajectory 
+                  analysisId={analysis.id}
+                  positions={analysis.pose_analysis.movement.stage_positions}
+                />
+              )}
             </TabsContent>
 
             <TabsContent value="overview" className="space-y-6">

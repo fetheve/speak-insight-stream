@@ -79,6 +79,11 @@ export interface AnalysisResult {
       left_pct: number;
       right_pct: number;
       score: number;
+      avg_fixation_duration_seconds?: number;
+      prolonged_fixations_count?: number;
+      neglected_zones?: string[];
+      gaze_heatmap?: Record<string, { percentage: number; count: number }>;
+      horizontal_distribution?: Record<string, number>;
     };
     gestures: {
       total_count: number;
@@ -87,6 +92,15 @@ export interface AnalysisResult {
       gestures_per_minute: number;
       hand_positions: Record<string, number>;
       score: number;
+      both_hands_active_pct?: number;
+      neither_hands_active_pct?: number;
+      gesture_variety_score?: number;
+      problem_gestures_time_pct?: number;
+      unique_postures_count?: number;
+      avg_posture_duration_seconds?: number;
+      max_posture_duration_seconds?: number;
+      left_hand_distribution?: Record<string, number>;
+      right_hand_distribution?: Record<string, number>;
     };
     movement: {
       movement_pct: number;
@@ -95,6 +109,10 @@ export interface AnalysisResult {
       avg_movement_duration_seconds: number;
       transitions_count: number;
       score: number;
+      total_distance_meters?: number;
+      average_speed_mps?: number;
+      static_phases_count?: number;
+      stage_positions?: Array<{ x: number; y: number; timestamp: number }>;
     };
     posture: {
       dominant_posture: string;
@@ -183,6 +201,28 @@ const generateMockAnalysis = (id: string, status: AnalysisStatus = 'completed'):
         left_pct: 28,
         right_pct: 20,
         score: Math.floor(Math.random() * 20) + 70,
+        avg_fixation_duration_seconds: 2.3,
+        prolonged_fixations_count: 8,
+        neglected_zones: ["left_level", "right_up"],
+        gaze_heatmap: {
+          left_up: { percentage: 8.5, count: 245 },
+          left_level: { percentage: 12.3, count: 355 },
+          left_down: { percentage: 6.2, count: 178 },
+          center_up: { percentage: 15.0, count: 432 },
+          center_level: { percentage: 29.5, count: 850 },
+          center_down: { percentage: 8.3, count: 239 },
+          right_up: { percentage: 5.7, count: 164 },
+          right_level: { percentage: 10.8, count: 311 },
+          right_down: { percentage: 3.7, count: 106 }
+        },
+        horizontal_distribution: {
+          left: 8.5,
+          "center-left": 18.7,
+          center: 29.3,
+          "center-right": 15.7,
+          right: 13.8,
+          away: 14.0
+        }
       },
       gestures: {
         total_count: 140,
@@ -197,6 +237,27 @@ const generateMockAnalysis = (id: string, status: AnalysisStatus = 'completed'):
           pockets: 6,
         },
         score: Math.floor(Math.random() * 20) + 75,
+        both_hands_active_pct: 42.5,
+        neither_hands_active_pct: 15.2,
+        gesture_variety_score: 78,
+        problem_gestures_time_pct: 8.3,
+        unique_postures_count: 12,
+        avg_posture_duration_seconds: 8.5,
+        max_posture_duration_seconds: 45.2,
+        left_hand_distribution: {
+          spread: 45.2,
+          on_torso: 30.1,
+          pointing: 12.3,
+          down: 8.4,
+          other: 4.0
+        },
+        right_hand_distribution: {
+          spread: 48.7,
+          on_torso: 25.3,
+          pointing: 15.2,
+          down: 7.8,
+          other: 3.0
+        }
       },
       movement: {
         movement_pct: 36,
@@ -205,6 +266,14 @@ const generateMockAnalysis = (id: string, status: AnalysisStatus = 'completed'):
         avg_movement_duration_seconds: 3.2,
         transitions_count: 15,
         score: Math.floor(Math.random() * 20) + 70,
+        total_distance_meters: 15.8,
+        average_speed_mps: 0.35,
+        static_phases_count: 3,
+        stage_positions: Array.from({ length: 50 }, (_, i) => ({
+          x: 0.5 + Math.sin(i * 0.3) * 0.3,
+          y: 0.5 + Math.cos(i * 0.3) * 0.3,
+          timestamp: i * 2
+        }))
       },
       posture: {
         dominant_posture: 'L:spread+R:spread',
