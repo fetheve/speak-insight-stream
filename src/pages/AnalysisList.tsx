@@ -108,7 +108,7 @@ const AnalysisList = () => {
     <div>
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2 bg-gradient-primary bg-clip-text text-transparent">
-          Your Analyses
+          Your Speeches
         </h1>
         <p className="text-muted-foreground">
           View and manage your speech analysis history
@@ -126,7 +126,7 @@ const AnalysisList = () => {
       {analyses.length === 0 ? (
         <Card className="p-12 text-center">
           <Video className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <h3 className="text-lg font-medium mb-2">No analyses yet</h3>
+          <h3 className="text-lg font-medium mb-2">No speeches yet</h3>
           <p className="text-muted-foreground mb-4">
             Upload your first video to get started
           </p>
