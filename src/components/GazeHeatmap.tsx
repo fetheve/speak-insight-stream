@@ -29,7 +29,7 @@ export const GazeHeatmap = ({ heatmap }: GazeHeatmapProps) => {
         <CardDescription>Where you looked during your speech</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
           {zones.flat().map(zone => {
             const data = heatmap[zone] || { percentage: 0, count: 0 };
             return (
