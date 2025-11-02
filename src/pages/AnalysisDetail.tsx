@@ -7,6 +7,9 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { api, type AnalysisResult } from "@/lib/api";
+import { VideoPlayer } from "@/components/VideoPlayer";
+import { MetricsChart } from "@/components/MetricsChart";
+import { MetricsSummary } from "@/components/MetricsSummary";
 
 const AnalysisDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -189,12 +192,32 @@ const AnalysisDetail = () => {
             />
           </div>
 
-          <Tabs defaultValue="overview" className="space-y-6">
+          <Tabs defaultValue="video" className="space-y-6">
             <TabsList>
+              <TabsTrigger value="video">Video Analysis</TabsTrigger>
+              <TabsTrigger value="summary">Metrics Summary</TabsTrigger>
+              <TabsTrigger value="timeline">Timeline View</TabsTrigger>
               <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="details">Detailed Metrics</TabsTrigger>
+              <TabsTrigger value="details">Details</TabsTrigger>
               <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="video" className="space-y-6">
+              <VideoPlayer
+                videoUrl={analysis.video_original_url}
+                overlayUrl={analysis.video_overlay_url}
+                title={analysis.video.title || analysis.video.filename}
+                duration={analysis.video.duration_seconds}
+              />
+            </TabsContent>
+
+            <TabsContent value="summary" className="space-y-6">
+              <MetricsSummary analysis={analysis} />
+            </TabsContent>
+
+            <TabsContent value="timeline" className="space-y-6">
+              <MetricsChart timeline={analysis.timeline} />
+            </TabsContent>
 
             <TabsContent value="overview" className="space-y-6">
               <Card>
