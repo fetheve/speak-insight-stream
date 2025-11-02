@@ -88,7 +88,7 @@ const AnalysisDetail = () => {
       <Button variant="ghost" size="sm" asChild className="mb-6">
         <Link to="/">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Analyses
+          Back to Speeches
         </Link>
       </Button>
 
@@ -197,14 +197,14 @@ const AnalysisDetail = () => {
             />
           </div>
 
-          <Tabs defaultValue="video" className="space-y-6">
+          <Tabs defaultValue="summary" className="space-y-6">
             <TabsList>
-              <TabsTrigger value="video">Video Analysis</TabsTrigger>
               <TabsTrigger value="summary">Metrics Summary</TabsTrigger>
               <TabsTrigger value="timeline">Timeline View</TabsTrigger>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="details">Details</TabsTrigger>
               <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+              <TabsTrigger value="video">Video Review</TabsTrigger>
             </TabsList>
 
             <TabsContent value="video" className="space-y-6">
